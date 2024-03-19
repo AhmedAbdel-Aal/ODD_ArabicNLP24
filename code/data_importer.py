@@ -1,3 +1,11 @@
+import pandas as pd
+import numpy as np
+from typing import List
+from tqdm import tqdm_notebook as tqdm
+from sklearn.model_selection import train_test_split
+DATA_COLUMN = "text"
+LABEL_COLUMN = "label"
+
 class CustomDataset:
     def __init__(
         self,
@@ -41,7 +49,7 @@ def read_HARD(file_path = "/content/balanced-reviews.txt"):
     label_list_HARD = ['NEG', 'POS']
 
     data_Hard = CustomDataset("HARD", train_HARD, test_HARD, label_list_HARD)
-    return data_HARD
+    return data_Hard
 
 
 def read_ArSAS(file_path="/content/ArSAS..txt"):
@@ -82,4 +90,4 @@ def read_LABR():
     data_LABR_B_U = CustomDataset(
         "LABR-UN-Binary", train_LABR_B_U, test_LABR_B_U, label_list_LABR_B_U
     )
-    all_datasets.append(data_LABR_B_U)
+    return (data_LABR_B_U)

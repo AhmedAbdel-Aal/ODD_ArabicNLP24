@@ -30,12 +30,9 @@ class CustomSequenceClassificationModel(nn.Module):
         
         # Pool the outputs into a single mean vector for classification
         embeddings = last_hidden_state[:, 0]  # Take the embedding of the [CLS] token for classification tasks
-        
-        # Apply dropout
-        pooled_output = self.dropout(pooled_output)
-        
+                
         # Pass through the classification head to get the logits
-        logits = self.classification_head(pooled_output)
+        logits = self.classification_head(embeddings)
 
         if return_features:
             return logits, embeddings
