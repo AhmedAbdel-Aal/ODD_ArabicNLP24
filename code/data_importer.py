@@ -54,6 +54,7 @@ def read_HARD(file_path = "/content/balanced-reviews.txt"):
 
 def read_ArSAS(file_path="/content/ArSAS..txt"):
     df_ArSAS = pd.read_csv(file_path, sep="\t",encoding='utf-8')
+    df_ArSAS = df_ArSAS[df_ArSAS['Sentiment_label'].isin(['Negative', 'Positive'])]
     df_ArSAS = df_ArSAS[["Tweet_text","Sentiment_label"]]  # we are interested in rating and review only
     df_ArSAS.columns = [DATA_COLUMN, LABEL_COLUMN]
     print("Total length: ", len(df_ArSAS))
@@ -61,7 +62,11 @@ def read_ArSAS(file_path="/content/ArSAS..txt"):
 
     label_list_ArSAS = list(df_ArSAS[LABEL_COLUMN].unique())
     print(label_list_ArSAS)
-
+    hard_map = {
+        'Negative': 'NEG',
+        'Positive': 'POS',
+    }
+    df_ArSAS[LABEL_COLUMN] = df_ArSAS[LABEL_COLUMN].apply(lambda x: hard_map[x])
     train_ArSAS, test_ArSAS = train_test_split(df_ArSAS, test_size=0.2, random_state=42)
     print("Training length: ", len(train_ArSAS))
     print("Testing length: ", len(test_ArSAS))
