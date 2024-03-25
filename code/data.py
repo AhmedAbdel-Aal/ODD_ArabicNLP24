@@ -1,6 +1,6 @@
 from torch.utils.data import DataLoader, Dataset
 from transformers import AutoTokenizer
-
+from transformers.data.processors.utils import InputFeatures
 
 class ClassificationDataset(Dataset):
     def __init__(self, text, target, model_name, max_len, label_map):
@@ -33,9 +33,9 @@ class ClassificationDataset(Dataset):
           max_length=self.max_len,
           padding='max_length',
           truncation=True,
-          return_tensors='pt'
+          #xreturn_tensors='pt'
       )
-      label = self.label_map[self.target[item]]
-      input_ids, attention_masks,token_type_ids = inputs.values()
-      return {'input_ids':input_ids.squeeze(), 'attention_mask':attention_masks.squeeze(), 'token_type_ids':token_type_ids.squeeze(), 'label':label} 
-      #return InputFeatures(**inputs,label=self.label_map[self.target[item]])
+      #label = self.label_map[self.target[item]]
+      #input_ids, attention_masks,token_type_ids = inputs.values()
+      #return {'input_ids':input_ids.squeeze(), 'attention_mask':attention_masks.squeeze(), 'token_type_ids':token_type_ids.squeeze(), 'label':label} 
+      return InputFeatures(**inputs,label=self.label_map[self.target[item]])
